@@ -7,11 +7,11 @@
  * Typical latency: 4-10s depending on API cold start.
  */
 
-import { parseJd } from "../../../proteus/proteus-next/src/lib/agents/jd-parser.js";
-import { parseResume } from "../../../proteus/proteus-next/src/lib/agents/resume-parser.js";
-import { analyzeGaps } from "../../../proteus/proteus-next/src/lib/agents/gap-analyzer.js";
-import { aggregateScores } from "../../../proteus/proteus-next/src/lib/agents/aggregator.js";
-import type { GapItem } from "../../../proteus/proteus-next/src/types/index.js";
+import { parseJd } from "../lib/agents/jd-parser.js";
+import { parseResume } from "../lib/agents/resume-parser.js";
+import { analyzeGaps } from "../lib/agents/gap-analyzer.js";
+import { aggregateScores } from "../lib/agents/aggregator.js";
+import type { GapItem } from "../types/index.js";
 
 export async function matchResumeToJd(jdText: string, resumeText: string) {
   if (!jdText?.trim()) {

@@ -1,12 +1,17 @@
 {
   "name": "proteus-mcp",
   "version": "1.0.0",
-  "description": "MCP server wrapping the PROTEUS resume-matching pipeline",
+  "description": "MCP server wrapping the PROTEUS resume-matching pipeline — deterministic scoring, gap analysis, rewrites, and cover letters",
   "type": "module",
   "main": "dist/server.js",
   "bin": {
     "proteus-mcp": "dist/server.js"
   },
+  "files": [
+    "dist",
+    "models.json",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
@@ -14,10 +19,27 @@
     "test": "tsx src/test.ts",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit",
-    "ci": "npm run typecheck && npm run lint && npm run build"
+    "prepublishOnly": "npm run build"
   },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "resume-matching",
+    "jd-analysis",
+    "nvidia-nim",
+    "embeddings",
+    "cosine-similarity",
+    "deterministic-scoring",
+    "ai-tools",
+    "llm",
+    "claude-desktop",
+    "claude-code"
+  ],
+  "author": "Daniel Deshmukh",
+  "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.1"
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "openai": "^7.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",

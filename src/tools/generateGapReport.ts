@@ -4,8 +4,8 @@
  * Returns the full gap analysis with matched, partial, and missing requirements.
  */
 
-import { analyzeGaps } from "../../../proteus/proteus-next/src/lib/agents/gap-analyzer.js";
-import type { JDStructured, ResumeStructured, GapItem } from "../../../proteus/proteus-next/src/types/index.js";
+import { analyzeGaps } from "../lib/agents/gap-analyzer.js";
+import type { JDStructured, ResumeStructured, GapItem } from "../types/index.js";
 
 export async function generateGapReport(jd: JDStructured, resume: ResumeStructured) {
   const gapAnalysis = await analyzeGaps(jd, resume);

@@ -8,13 +8,13 @@
  * Document this clearly so calling models set expectations correctly.
  */
 
-import { parseJd } from "../../../proteus/proteus-next/src/lib/agents/jd-parser.js";
-import { parseResume } from "../../../proteus/proteus-next/src/lib/agents/resume-parser.js";
-import { analyzeGaps } from "../../../proteus/proteus-next/src/lib/agents/gap-analyzer.js";
-import { suggestRewrites } from "../../../proteus/proteus-next/src/lib/agents/rewrite-suggester.js";
-import { generateCoverLetter } from "../../../proteus/proteus-next/src/lib/agents/cover-letter.js";
-import { aggregateScores } from "../../../proteus/proteus-next/src/lib/agents/aggregator.js";
-import type { Tone, GapItem, RewriteSuggestion, CoverLetterSection } from "../../../proteus/proteus-next/src/types/index.js";
+import { parseJd } from "../lib/agents/jd-parser.js";
+import { parseResume } from "../lib/agents/resume-parser.js";
+import { analyzeGaps } from "../lib/agents/gap-analyzer.js";
+import { suggestRewrites } from "../lib/agents/rewrite-suggester.js";
+import { generateCoverLetter } from "../lib/agents/cover-letter.js";
+import { aggregateScores } from "../lib/agents/aggregator.js";
+import type { Tone, GapItem, RewriteSuggestion, CoverLetterSection } from "../types/index.js";
 
 export async function matchResumeToJdFull(
   jdText: string,

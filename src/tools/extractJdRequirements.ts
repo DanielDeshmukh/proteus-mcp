@@ -3,7 +3,7 @@
  * Wraps parseJd() from the PROTEUS pipeline.
  */
 
-import { parseJd } from "../../../proteus/proteus-next/src/lib/agents/jd-parser.js";
+import { parseJd } from "../lib/agents/jd-parser.js";
 
 export async function extractJdRequirements(jdText: string) {
   if (!jdText?.trim()) {

@@ -7,9 +7,9 @@
  * but depends on model availability.
  */
 
-import { analyzeGaps } from "../../../proteus/proteus-next/src/lib/agents/gap-analyzer.js";
-import { aggregateScores } from "../../../proteus/proteus-next/src/lib/agents/aggregator.js";
-import type { JDStructured, ResumeStructured } from "../../../proteus/proteus-next/src/types/index.js";
+import { analyzeGaps } from "../lib/agents/gap-analyzer.js";
+import { aggregateScores } from "../lib/agents/aggregator.js";
+import type { JDStructured, ResumeStructured } from "../types/index.js";
 
 export async function scoreMatch(jd: JDStructured, resume: ResumeStructured) {
   const gapAnalysis = await analyzeGaps(jd, resume);

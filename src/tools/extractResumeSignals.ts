@@ -3,7 +3,7 @@
  * Wraps parseResume() from the PROTEUS pipeline.
  */
 
-import { parseResume } from "../../../proteus/proteus-next/src/lib/agents/resume-parser.js";
+import { parseResume } from "../lib/agents/resume-parser.js";
 
 export async function extractResumeSignals(resumeText: string) {
   if (!resumeText?.trim()) {
