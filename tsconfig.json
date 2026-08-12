@@ -8,11 +8,19 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "rootDir": "src",
     "declaration": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "noEmit": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "../proteus/proteus-next/src/lib/agents/*.ts",
+    "../proteus/proteus-next/src/lib/nim-client.ts",
+    "../proteus/proteus-next/src/lib/groq-client.ts",
+    "../proteus/proteus-next/src/lib/model-config.ts",
+    "../proteus/proteus-next/src/lib/jd-prefilter.ts",
+    "../proteus/proteus-next/src/types/index.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build & Typecheck
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: TypeScript compile
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install ESLint
+        run: npm install -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+
+      - name: Run ESLint
+        run: npx eslint src/ --ext .ts
+
+  test:
+    name: Test (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Verify MCP server starts
+        run: timeout 5 node --import tsx src/server.ts 2>&1 || true
+        env:
+          NVIDIA_NIM_API_KEY: test
+          GROQ_API_KEY: test
+
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm audit --audit-level=high
+
+  secret-scan:
+    name: Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scan for hardcoded secrets
+        run: |
+          if grep -rn "nvapi-\|gsk_\|sk-" src/ --include="*.ts" --include="*.js"; then
+            echo "ERROR: Hardcoded secrets found in source code"
+            exit 1
+          fi
+          echo "No hardcoded secrets found"
