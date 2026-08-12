@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "proteus": {
+      "command": "node",
+      "args": ["--import", "tsx", "/absolute/path/to/proteus-mcp/src/server.ts"],
+      "env": {
+        "NVIDIA_NIM_API_KEY": "nvapi-your-key-here",
+        "GROQ_API_KEY": "gsk-your-key-here"
+      }
+    }
+  }
+}
