@@ -5,14 +5,14 @@
  */
 
 import { analyzeGaps } from "../../../proteus/proteus-next/src/lib/agents/gap-analyzer.js";
-import type { JDStructured, ResumeStructured } from "../../../proteus/proteus-next/src/types/index.js";
+import type { JDStructured, ResumeStructured, GapItem } from "../../../proteus/proteus-next/src/types/index.js";
 
 export async function generateGapReport(jd: JDStructured, resume: ResumeStructured) {
   const gapAnalysis = await analyzeGaps(jd, resume);
 
   const matched = gapAnalysis.gaps
-    .filter((g) => g.status === "matched")
-    .map((g) => ({
+    .filter((g: GapItem) => g.status === "matched")
+    .map((g: GapItem) => ({
       requirement: g.requirement,
       score: g.similarity_score,
       evidence: g.matched_evidence,
@@ -20,8 +20,8 @@ export async function generateGapReport(jd: JDStructured, resume: ResumeStructur
     }));
 
   const partial = gapAnalysis.gaps
-    .filter((g) => g.status === "partial")
-    .map((g) => ({
+    .filter((g: GapItem) => g.status === "partial")
+    .map((g: GapItem) => ({
       requirement: g.requirement,
       score: g.similarity_score,
       evidence: g.matched_evidence,
@@ -29,8 +29,8 @@ export async function generateGapReport(jd: JDStructured, resume: ResumeStructur
     }));
 
   const missing = gapAnalysis.gaps
-    .filter((g) => g.status === "missing")
-    .map((g) => ({
+    .filter((g: GapItem) => g.status === "missing")
+    .map((g: GapItem) => ({
       requirement: g.requirement,
       score: g.similarity_score,
       category: g.category,

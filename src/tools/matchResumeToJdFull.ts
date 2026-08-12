@@ -14,7 +14,7 @@ import { analyzeGaps } from "../../../proteus/proteus-next/src/lib/agents/gap-an
 import { suggestRewrites } from "../../../proteus/proteus-next/src/lib/agents/rewrite-suggester.js";
 import { generateCoverLetter } from "../../../proteus/proteus-next/src/lib/agents/cover-letter.js";
 import { aggregateScores } from "../../../proteus/proteus-next/src/lib/agents/aggregator.js";
-import type { Tone } from "../../../proteus/proteus-next/src/types/index.js";
+import type { Tone, GapItem, RewriteSuggestion, CoverLetterSection } from "../../../proteus/proteus-next/src/types/index.js";
 
 export async function matchResumeToJdFull(
   jdText: string,
@@ -67,7 +67,7 @@ export async function matchResumeToJdFull(
       partial: gapAnalysis.partial_count,
       missing: gapAnalysis.missing_count,
       total: gapAnalysis.total_requirements,
-      gaps: gapAnalysis.gaps.map((g) => ({
+      gaps: gapAnalysis.gaps.map((g: GapItem) => ({
         requirement: g.requirement,
         status: g.status,
         score: g.similarity_score,
@@ -76,7 +76,7 @@ export async function matchResumeToJdFull(
       })),
     },
     rewrite_suggestions: {
-      suggestions: rewrites.suggestions.map((s) => ({
+      suggestions: rewrites.suggestions.map((s: RewriteSuggestion) => ({
         original: s.original_bullet,
         rewrite: s.suggested_rewrite,
         rationale: s.rationale,
@@ -91,7 +91,7 @@ export async function matchResumeToJdFull(
       tone: coverLetter.tone,
       word_count: coverLetter.word_count,
       key_points_addressed: coverLetter.key_points_addressed,
-      sections: coverLetter.sections.map((s) => ({
+      sections: coverLetter.sections.map((s: CoverLetterSection) => ({
         heading: s.heading,
         content: s.content,
       })),

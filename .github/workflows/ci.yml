@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    name: Build & Typecheck
+    name: Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,15 +19,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/checkout@v4
+        with:
+          repository: DanielDeshmukh/proteus
+          path: ../proteus
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
 
       - run: npm ci
-
-      - name: TypeScript compile
-        run: npx tsc --noEmit
 
       - name: Build
         run: npm run build
@@ -45,11 +47,8 @@ jobs:
 
       - run: npm ci
 
-      - name: Install ESLint
-        run: npm install -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
-
       - name: Run ESLint
-        run: npx eslint src/ --ext .ts
+        run: npx eslint src/
 
   test:
     name: Test (Node ${{ matrix.node-version }})

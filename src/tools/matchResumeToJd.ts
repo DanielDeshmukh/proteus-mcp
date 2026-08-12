@@ -11,6 +11,7 @@ import { parseJd } from "../../../proteus/proteus-next/src/lib/agents/jd-parser.
 import { parseResume } from "../../../proteus/proteus-next/src/lib/agents/resume-parser.js";
 import { analyzeGaps } from "../../../proteus/proteus-next/src/lib/agents/gap-analyzer.js";
 import { aggregateScores } from "../../../proteus/proteus-next/src/lib/agents/aggregator.js";
+import type { GapItem } from "../../../proteus/proteus-next/src/types/index.js";
 
 export async function matchResumeToJd(jdText: string, resumeText: string) {
   if (!jdText?.trim()) {
@@ -51,7 +52,7 @@ export async function matchResumeToJd(jdText: string, resumeText: string) {
       partial: gapAnalysis.partial_count,
       missing: gapAnalysis.missing_count,
       total: gapAnalysis.total_requirements,
-      gaps: gapAnalysis.gaps.map((g) => ({
+      gaps: gapAnalysis.gaps.map((g: GapItem) => ({
         requirement: g.requirement,
         status: g.status,
         score: g.similarity_score,
