@@ -26,6 +26,24 @@
 
 ---
 
+## Table of Contents
+
+- [What It Does](#what-it-does)
+- [Tools](#tools)
+- [Quick Start](#quick-start)
+- [Tool Usage Guide](#tool-usage-guide)
+- [CLI Reference](#cli-reference)
+- [Determinism](#determinism)
+- [Latency](#latency)
+- [Architecture](#architecture)
+- [CI/CD](#cicd)
+- [Privacy](#privacy)
+- [Topics](#topics)
+- [Related Projects](#related-projects)
+- [License](#license)
+
+---
+
 ## What It Does
 
 PROTEUS MCP wraps a [5-agent resume-matching pipeline](https://github.com/DanielDeshmukh/proteus) as 6 discrete MCP tools. Paste a job description and resume into Claude Desktop / Claude Code / OpenCode — get a deterministic match score, gap analysis, bullet rewrites, and a tailored cover letter.
@@ -35,6 +53,8 @@ PROTEUS MCP wraps a [5-agent resume-matching pipeline](https://github.com/Daniel
 ### Why MCP?
 
 MCP (Model Context Protocol) is the open standard for connecting AI assistants to external tools. This server proves you understand the protocol — stdio transport, JSON-RPC tool schemas, discrete tool boundaries — not just "I called an LLM API."
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -48,6 +68,8 @@ MCP (Model Context Protocol) is the open standard for connecting AI assistants t
 | `generate_gap_report` | Parsed JD + resume | Matched / partial / missing requirements | ~2s |
 | `match_resume_to_jd` | Raw JD + resume text | **Fast path** — score + gaps | **4-10s** |
 | `match_resume_to_jd_full` | Raw JD + resume text | Full pipeline + rewrites + cover letter | **~90s** |
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -64,6 +86,8 @@ MCP (Model Context Protocol) is the open standard for connecting AI assistants t
 ```bash
 npm install -g proteus-mcp
 ```
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -306,6 +330,8 @@ const gaps = await client.callTool({
 });
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## CLI Reference
@@ -377,6 +403,8 @@ Add to your Claude Desktop config:
 | `--help` | Show help message |
 | `--version` | Show installed version |
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## Determinism
@@ -400,6 +428,8 @@ overall = hard_skills(50%) + domain_keywords(20%) + soft_skills(15%) + ats_bait(
 category_score = (matched * 1.0 + partial * 0.6) / total
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## Latency
@@ -414,6 +444,8 @@ Measured with real JD + resume pairs (Google Cloud SRE role vs. 7-year backend e
 | **Total (fast path)** | **6.6s** | **4-5s** |
 | Rewrite + Cover Letter | +20-40s | +15-30s |
 | **Total (full pipeline)** | **~90s** | **~60s** |
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -437,6 +469,8 @@ proteus-mcp/
 └── tsconfig.json
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## CI/CD
@@ -451,6 +485,8 @@ GitHub Actions runs on every push and PR:
 | **Security Audit** | `npm audit --audit-level=high` |
 | **Secret Scan** | Scans source for hardcoded API keys |
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## Privacy
@@ -461,11 +497,15 @@ GitHub Actions runs on every push and PR:
 - **No remote transport** — stdio only, no SSE/HTTP exposure
 - Calls pipeline functions directly — bypasses Next.js API routes and database
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## Topics
 
 `mcp` `model-context-protocol` `resume-matching` `jd-analysis` `resume-parser` `career-tools` `nvidia-nim` `embeddings` `cosine-similarity` `deterministic-scoring` `ai-tools` `llm` `typescript` `claude-desktop` `claude-code` `opencode`
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -474,11 +514,15 @@ GitHub Actions runs on every push and PR:
 - **[PROTEUS](https://github.com/DanielDeshmukh/proteus)** — The full JD-aware resume matching pipeline with web UI, auth, and history
 - **[MCP SDK](https://github.com/modelcontextprotocol/typescript-sdk)** — Official TypeScript SDK for Model Context Protocol
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## License
 
 [MIT](LICENSE)
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
