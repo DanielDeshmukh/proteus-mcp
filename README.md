@@ -9,6 +9,9 @@
   <a href="https://github.com/DanielDeshmukh/proteus-mcp/actions/workflows/ci.yml">
     <img src="https://github.com/DanielDeshmukh/proteus-mcp/actions/workflows/ci.yml/badge.svg" alt="CI">
   </a>
+  <a href="https://www.npmjs.com/package/proteus-mcp">
+    <img src="https://img.shields.io/npm/v/proteus-mcp?style=flat-square&color=cb3837" alt="npm version">
+  </a>
   <a href="https://github.com/DanielDeshmukh/proteus-mcp/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/DanielDeshmukh/proteus-mcp?style=flat-square&color=blue" alt="License">
   </a>
@@ -59,24 +62,7 @@ MCP (Model Context Protocol) is the open standard for connecting AI assistants t
 ### Install
 
 ```bash
-git clone https://github.com/DanielDeshmukh/proteus-mcp.git
-cd proteus-mcp
-npm install
-```
-
-### Configure Environment
-
-```bash
-export NVIDIA_NIM_API_KEY=nvapi-your-key
-export GROQ_API_KEY=gsk-your-key
-```
-
-### Run
-
-```bash
-npm run dev    # development (tsx hot-reload)
-npm run build  # production build
-npm start      # production run
+npm install -g proteus-mcp
 ```
 
 ---
@@ -91,8 +77,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 {
   "mcpServers": {
     "proteus": {
-      "command": "node",
-      "args": ["--import", "tsx", "/absolute/path/to/proteus-mcp/src/server.ts"],
+      "command": "proteus-mcp",
       "env": {
         "NVIDIA_NIM_API_KEY": "nvapi-your-key",
         "GROQ_API_KEY": "gsk-your-key"
@@ -108,8 +93,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 {
   "mcpServers": {
     "proteus": {
-      "command": "node",
-      "args": ["--import", "tsx", "/absolute/path/to/proteus-mcp/src/server.ts"],
+      "command": "proteus-mcp",
       "env": {
         "NVIDIA_NIM_API_KEY": "nvapi-your-key",
         "GROQ_API_KEY": "gsk-your-key"
