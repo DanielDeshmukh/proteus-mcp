@@ -10,7 +10,7 @@
     <img src="https://github.com/DanielDeshmukh/proteus-mcp/actions/workflows/ci.yml/badge.svg" alt="CI">
   </a>
   <a href="https://www.npmjs.com/package/proteus-mcp">
-    <img src="https://img.shields.io/npm/v/proteus-mcp?style=flat-square&color=cb3837" alt="npm version">
+    <img src="https://img.shields.io/npm/v/proteus-mcp?style=flat-square&logo=npm&logoColor=white&color=cb3837" alt="npm version">
   </a>
   <a href="https://github.com/DanielDeshmukh/proteus-mcp/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/DanielDeshmukh/proteus-mcp?style=flat-square&color=blue" alt="License">
