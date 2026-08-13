@@ -29,6 +29,7 @@
 ## Table of Contents
 
 - [What It Does](#what-it-does)
+- [How It Works](#how-it-works)
 - [Tools](#tools)
 - [Quick Start](#quick-start)
 - [Tool Usage Guide](#tool-usage-guide)
@@ -53,6 +54,35 @@ PROTEUS MCP wraps a [5-agent resume-matching pipeline](https://github.com/Daniel
 ### Why MCP?
 
 MCP (Model Context Protocol) is the open standard for connecting AI assistants to external tools. This server proves you understand the protocol — stdio transport, JSON-RPC tool schemas, discrete tool boundaries — not just "I called an LLM API."
+
+### How It Works
+
+1. **Install once:**
+   ```bash
+   npm install -g proteus-mcp
+   ```
+
+2. **Configure in Claude Desktop/Code:**
+   ```json
+   {
+     "mcpServers": {
+       "proteus": {
+         "command": "proteus-mcp",
+         "env": {
+           "NVIDIA_NIM_API_KEY": "nvapi-xxx",
+           "GROQ_API_KEY": "gsk-xxx"
+         }
+       }
+     }
+   }
+   ```
+
+3. **Restart Claude Desktop/Code**
+
+4. **Use naturally in chat:**
+   > "Here's a job description: [paste JD]. Here's my resume: [paste resume]. What's my match score?"
+
+Claude automatically calls the MCP tools behind the scenes — you never see JSON-RPC or tool calls. You just chat naturally and get a match score, gap analysis, bullet rewrites, and a cover letter.
 
 [↑ Back to Top](#table-of-contents)
 
