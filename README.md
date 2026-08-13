@@ -67,102 +67,114 @@ npm install -g proteus-mcp
 
 ---
 
-## MCP Client Configuration
+## Tool Usage Guide
 
-### Claude Desktop
+### `extract_jd_requirements`
 
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+Parse a raw job description into structured requirements.
 
-```json
-{
-  "mcpServers": {
-    "proteus": {
-      "command": "proteus-mcp",
-      "env": {
-        "NVIDIA_NIM_API_KEY": "nvapi-your-key",
-        "GROQ_API_KEY": "gsk-your-key"
-      }
-    }
+```typescript
+const result = await client.callTool({
+  name: "extract_jd_requirements",
+  arguments: {
+    jd_text: `
+      Google — Senior Software Engineer, Cloud Platform
+
+      Requirements:
+      - 5+ years of experience in distributed systems
+      - Strong proficiency in Go or Python
+      - Experience with Kubernetes, Terraform, and CI/CD pipelines
+      - Familiarity with gRPC and microservices architecture
+      - Excellent communication and leadership skills
+    `
   }
-}
+});
 ```
 
-### Claude Code / OpenCode
-
-```json
-{
-  "mcpServers": {
-    "proteus": {
-      "command": "proteus-mcp",
-      "env": {
-        "NVIDIA_NIM_API_KEY": "nvapi-your-key",
-        "GROQ_API_KEY": "gsk-your-key"
-      }
-    }
-  }
-}
-```
-
----
-
-## Tool Schemas
-
-<details>
-<summary><strong>extract_jd_requirements</strong></summary>
-
-**Input:**
-```json
-{ "jd_text": "Google — Senior Software Engineer..." }
-```
-
-**Output:**
+**Response:**
 ```json
 {
   "title": "Senior Software Engineer, Cloud Platform",
   "company": "Google",
   "seniority_level": "senior",
-  "hard_skills": ["Go", "Python", "Kubernetes", ...],
-  "soft_skills": ["leadership", "communication", ...],
-  "domain_keywords": ["distributed systems", "cloud infrastructure", ...],
-  "ats_bait": ["Kubernetes", "Terraform", "gRPC", ...],
-  "requirements_summary": "5+ years experience in distributed systems..."
+  "hard_skills": ["Go", "Python", "Kubernetes", "Terraform", "gRPC", "CI/CD"],
+  "soft_skills": ["leadership", "communication"],
+  "domain_keywords": ["distributed systems", "cloud infrastructure", "microservices"],
+  "ats_bait": ["Kubernetes", "Terraform", "gRPC", "CI/CD"],
+  "requirements_summary": "5+ years experience in distributed systems with Go/Python and Kubernetes"
 }
 ```
-</details>
 
-<details>
-<summary><strong>extract_resume_signals</strong></summary>
+---
 
-**Input:**
-```json
-{ "resume_text": "Jane Smith\njane@email.com..." }
+### `extract_resume_signals`
+
+Parse a raw resume into structured candidate data.
+
+```typescript
+const result = await client.callTool({
+  name: "extract_resume_signals",
+  arguments: {
+    resume_text: `
+      Jane Smith
+      jane@email.com | (555) 123-4567 | San Francisco, CA
+
+      EXPERIENCE
+      Senior Software Engineer | Meta | 2021-Present
+      - Led migration of 200+ microservices from ECS to Kubernetes
+      - Built real-time monitoring dashboards using Prometheus and Grafana
+      - Reduced mean-time-to-detection by 40% through observability improvements
+
+      EDUCATION
+      MS Computer Science | Stanford University | 2019
+      BS Computer Science | UC Berkeley | 2017
+    `
+  }
+});
 ```
 
-**Output:**
+**Response:**
 ```json
 {
   "name": "Jane Smith",
-  "skills": ["Python", "Go", "Kubernetes", ...],
-  "experience": [{ "role": "Senior SWE", "company": "Meta", "bullets": [...] }],
-  "projects": [...],
-  "education": [{ "degree": "MS CS", "institution": "Stanford" }],
-  "certifications": [...]
+  "email": "jane@email.com",
+  "skills": ["Go", "Python", "Kubernetes", "Prometheus", "Grafana", "ECS"],
+  "experience": [
+    {
+      "role": "Senior Software Engineer",
+      "company": "Meta",
+      "bullets": [
+        "Led migration of 200+ microservices from ECS to Kubernetes",
+        "Built real-time monitoring dashboards using Prometheus and Grafana",
+        "Reduced mean-time-to-detection by 40% through observability improvements"
+      ]
+    }
+  ],
+  "education": [
+    { "degree": "MS Computer Science", "institution": "Stanford University" },
+    { "degree": "BS Computer Science", "institution": "UC Berkeley" }
+  ],
+  "certifications": []
 }
 ```
-</details>
 
-<details>
-<summary><strong>match_resume_to_jd</strong> (fast path)</summary>
+---
 
-**Input:**
-```json
-{
-  "jd_text": "Google — Senior Software Engineer...",
-  "resume_text": "Jane Smith\njane@email.com..."
-}
+### `match_resume_to_jd` (Fast Path)
+
+Score a resume against a JD with gap analysis — no rewrites or cover letter.
+
+```typescript
+const result = await client.callTool({
+  name: "match_resume_to_jd",
+  arguments: {
+    jd_text: "Google — Senior Software Engineer... (full JD text)",
+    resume_text: "Jane Smith\njane@email.com... (full resume text)"
+  }
+});
 ```
 
-**Output:**
+**Response:**
 ```json
 {
   "overall_score": 0.7966,
@@ -184,27 +196,50 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
         "score": 0.95,
         "evidence": "Led migration of 200+ microservices from ECS to Kubernetes",
         "category": "hard_skill"
+      },
+      {
+        "requirement": "Terraform",
+        "status": "partial",
+        "score": 0.6,
+        "evidence": "Used IaC tools but no direct Terraform mention",
+        "category": "hard_skill"
+      },
+      {
+        "requirement": "gRPC",
+        "status": "missing",
+        "score": 0.0,
+        "evidence": null,
+        "category": "hard_skill"
       }
     ]
   },
-  "timings": { "parse": "4.7s", "gap_analysis": "1.9s", "aggregate": "0.0s", "total": "6.6s" }
-}
-```
-</details>
-
-<details>
-<summary><strong>match_resume_to_jd_full</strong></summary>
-
-**Input:**
-```json
-{
-  "jd_text": "Google — Senior Software Engineer...",
-  "resume_text": "Jane Smith\njane@email.com...",
-  "cover_letter_tone": "professional"
+  "timings": {
+    "parse": "4.7s",
+    "gap_analysis": "1.9s",
+    "aggregate": "0.0s",
+    "total": "6.6s"
+  }
 }
 ```
 
-**Output:** Everything from `match_resume_to_jd` plus:
+---
+
+### `match_resume_to_jd_full`
+
+Full pipeline: score, gaps, bullet rewrites, and tailored cover letter.
+
+```typescript
+const result = await client.callTool({
+  name: "match_resume_to_jd_full",
+  arguments: {
+    jd_text: "Google — Senior Software Engineer... (full JD text)",
+    resume_text: "Jane Smith\njane@email.com... (full resume text)",
+    cover_letter_tone: "professional"
+  }
+});
+```
+
+**Response:** (includes everything from `match_resume_to_jd` plus)
 ```json
 {
   "rewrite_suggestions": {
@@ -221,14 +256,126 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
   },
   "cover_letter": {
     "job_title": "Senior Software Engineer",
-    "full_letter": "Dear Hiring Manager,\n\nI am writing to express my interest...",
+    "full_letter": "Dear Hiring Manager,\n\nI am writing to express my interest in the Senior Software Engineer position at Google...",
     "tone": "professional",
     "word_count": 342,
     "key_points_addressed": ["Kubernetes", "distributed systems", "observability"]
   }
 }
 ```
-</details>
+
+---
+
+### `score_match`
+
+Score pre-parsed JD and resume signals (requires output from `extract_jd_requirements` and `extract_resume_signals`).
+
+```typescript
+const jd = await client.callTool({
+  name: "extract_jd_requirements",
+  arguments: { jd_text: "..." }
+});
+
+const resume = await client.callTool({
+  name: "extract_resume_signals",
+  arguments: { resume_text: "..." }
+});
+
+const score = await client.callTool({
+  name: "score_match",
+  arguments: {
+    jd_requirements: jd.content,
+    resume_signals: resume.content
+  }
+});
+```
+
+---
+
+### `generate_gap_report`
+
+Generate gap analysis from pre-parsed signals.
+
+```typescript
+const gaps = await client.callTool({
+  name: "generate_gap_report",
+  arguments: {
+    jd_requirements: jd.content,
+    resume_signals: resume.content
+  }
+});
+```
+
+---
+
+## CLI Reference
+
+### Global Install
+
+```bash
+npm install -g proteus-mcp
+```
+
+### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NVIDIA_NIM_API_KEY` | Yes | API key for NVIDIA NIM embedding and LLM services |
+| `GROQ_API_KEY` | Yes | API key for Groq LLM inference |
+
+### Running the Server
+
+```bash
+# Start MCP server (stdio transport — used by Claude Desktop / Claude Code)
+proteus-mcp
+
+# Or with inline env vars
+NVIDIA_NIM_API_KEY=nvapi-xxx GROQ_API_KEY=gsk-xxx proteus-mcp
+```
+
+### Using with Claude Desktop
+
+Add to your Claude Desktop config:
+
+**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "proteus": {
+      "command": "proteus-mcp",
+      "env": {
+        "NVIDIA_NIM_API_KEY": "nvapi-your-key",
+        "GROQ_API_KEY": "gsk-your-key"
+      }
+    }
+  }
+}
+```
+
+### Using with Claude Code / OpenCode
+
+```json
+{
+  "mcpServers": {
+    "proteus": {
+      "command": "proteus-mcp",
+      "env": {
+        "NVIDIA_NIM_API_KEY": "nvapi-your-key",
+        "GROQ_API_KEY": "gsk-your-key"
+      }
+    }
+  }
+}
+```
+
+### CLI Flags
+
+| Flag | Description |
+|------|-------------|
+| `--help` | Show help message |
+| `--version` | Show installed version |
 
 ---
 
