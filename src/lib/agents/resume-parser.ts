@@ -1,6 +1,6 @@
-import { getModelForRole } from "../model-config";
-import { ResumeStructuredSchema, type ResumeStructured } from "../../types";
-import { callWithJsonRetry } from "./json-retry";
+import { getModelForRole } from "../model-config.js";
+import { ResumeStructuredSchema, type ResumeStructured } from "../../types/index.js";
+import { callWithJsonRetry } from "./json-retry.js";
 
 const RESUME_PARSER_MODEL = getModelForRole("resume-parser");
 

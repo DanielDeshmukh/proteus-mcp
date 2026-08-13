@@ -1,4 +1,4 @@
-import type { GapAnalysis, PipelineOutput } from "../../types";
+import type { GapAnalysis, PipelineOutput } from "../../types/index.js";
 
 export function aggregateScores(gapAnalysis: GapAnalysis): PipelineOutput {
   const categories = ["hard_skill", "soft_skill", "domain_keyword", "ats_bait"] as const;

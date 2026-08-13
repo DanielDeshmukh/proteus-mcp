@@ -1,6 +1,6 @@
-import { getModelForRole } from "../model-config";
-import { RewriteOutputSchema, type RewriteOutput, type GapAnalysis, type JDStructured, type ResumeStructured } from "../../types";
-import { callWithJsonRetry } from "./json-retry";
+import { getModelForRole } from "../model-config.js";
+import { RewriteOutputSchema, type RewriteOutput, type GapAnalysis, type JDStructured, type ResumeStructured } from "../../types/index.js";
+import { callWithJsonRetry } from "./json-retry.js";
 
 const REWRITE_MODEL = getModelForRole("rewrite-suggester");
 

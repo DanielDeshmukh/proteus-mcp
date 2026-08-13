@@ -1,7 +1,7 @@
-export { parseJd } from "./jd-parser";
-export { parseResume } from "./resume-parser";
-export { analyzeGaps } from "./gap-analyzer";
-export { suggestRewrites } from "./rewrite-suggester";
-export { generateCoverLetter } from "./cover-letter";
-export { aggregateScores } from "./aggregator";
-export { runPipeline, type PipelineResult } from "./pipeline";
+export { parseJd } from "./jd-parser.js";
+export { parseResume } from "./resume-parser.js";
+export { analyzeGaps } from "./gap-analyzer.js";
+export { suggestRewrites } from "./rewrite-suggester.js";
+export { generateCoverLetter } from "./cover-letter.js";
+export { aggregateScores } from "./aggregator.js";
+export { runPipeline, type PipelineResult } from "./pipeline.js";

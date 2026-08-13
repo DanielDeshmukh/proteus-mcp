@@ -1,5 +1,5 @@
-import { chatCompletion, extractJson } from "../nim-client";
-import { groqChatCompletion } from "../groq-client";
+import { chatCompletion, extractJson } from "../nim-client.js";
+import { groqChatCompletion } from "../groq-client.js";
 import { ZodSchema } from "zod";
 
 const RETRY_SUFFIX = `\n\nIMPORTANT: Your previous response was NOT valid JSON. You MUST return ONLY a valid JSON object. No text before or after. No markdown code fences. No explanation. Just the raw JSON starting with { and ending with }.`;

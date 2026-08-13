@@ -1,6 +1,6 @@
-import { CoverLetterOutputSchema, type CoverLetterOutput, type Tone, type GapAnalysis, type JDStructured, type ResumeStructured } from "../../types";
-import { groqChatCompletion } from "../groq-client";
-import { getModelForRole } from "../model-config";
+import { CoverLetterOutputSchema, type CoverLetterOutput, type Tone, type GapAnalysis, type JDStructured, type ResumeStructured } from "../../types/index.js";
+import { groqChatCompletion } from "../groq-client.js";
+import { getModelForRole } from "../model-config.js";
 import { ZodSchema } from "zod";
 
 function getCoverLetterModel(): string {

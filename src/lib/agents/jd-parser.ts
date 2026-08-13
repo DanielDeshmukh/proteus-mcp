@@ -1,7 +1,7 @@
-import { getModelForRole } from "../model-config";
-import { JDStructuredSchema, type JDStructured } from "../../types";
-import { callWithJsonRetry } from "./json-retry";
-import { preFilterJd } from "../jd-prefilter";
+import { getModelForRole } from "../model-config.js";
+import { JDStructuredSchema, type JDStructured } from "../../types/index.js";
+import { callWithJsonRetry } from "./json-retry.js";
+import { preFilterJd } from "../jd-prefilter.js";
 
 const JD_PARSER_MODEL = getModelForRole("jd-parser");
 

@@ -1,6 +1,6 @@
-import { embedTexts } from "../nim-client";
-import { getModelForRole } from "../model-config";
-import type { JDStructured, ResumeStructured, GapAnalysis, GapItem } from "../../types";
+import { embedTexts } from "../nim-client.js";
+import { getModelForRole } from "../model-config.js";
+import type { JDStructured, ResumeStructured, GapAnalysis, GapItem } from "../../types/index.js";
 
 const EMBEDDING_MODEL = getModelForRole("gap-analyzer");
 const MATCH_THRESHOLD = 0.45;

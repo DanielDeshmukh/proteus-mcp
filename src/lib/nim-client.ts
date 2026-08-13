@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { getEmbeddingModel } from "./model-config";
+import { getEmbeddingModel } from "./model-config.js";
 
 const NIM_BASE_URL = "https://integrate.api.nvidia.com/v1";
 

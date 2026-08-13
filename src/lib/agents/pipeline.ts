@@ -1,10 +1,10 @@
-import type { JDStructured, ResumeStructured, GapAnalysis, RewriteOutput, CoverLetterOutput, PipelineOutput, Tone } from "../../types";
-import { parseJd } from "./jd-parser";
-import { parseResume } from "./resume-parser";
-import { analyzeGaps } from "./gap-analyzer";
-import { suggestRewrites } from "./rewrite-suggester";
-import { generateCoverLetter } from "./cover-letter";
-import { aggregateScores } from "./aggregator";
+import type { JDStructured, ResumeStructured, GapAnalysis, RewriteOutput, CoverLetterOutput, PipelineOutput, Tone } from "../../types/index.js";
+import { parseJd } from "./jd-parser.js";
+import { parseResume } from "./resume-parser.js";
+import { analyzeGaps } from "./gap-analyzer.js";
+import { suggestRewrites } from "./rewrite-suggester.js";
+import { generateCoverLetter } from "./cover-letter.js";
+import { aggregateScores } from "./aggregator.js";
 
 export type ProgressEvent =
   | { stage: "parsing" }
