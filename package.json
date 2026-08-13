@@ -1,6 +1,6 @@
 {
   "name": "proteus-mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCP server wrapping the PROTEUS resume-matching pipeline — deterministic scoring, gap analysis, rewrites, and cover letters",
   "type": "module",
   "main": "dist/server.js",
